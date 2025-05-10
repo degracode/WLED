@@ -19,6 +19,7 @@
 #include "PipesScreensaverState.h"
 #include "StarfieldScreensaverState.h"
 #include "SolitareState.h"
+#include "PongState.h"
 
 const Image* img_Wallpaper = &img_GreenHill;
 
@@ -37,25 +38,26 @@ void EdwinUsermod::setup() {
     auto& bios = _sm->AddState<BIOSState>();
     auto& osBoot = _sm->AddState<OSBootState>(img_OSBoot, MaxActiveMillis);
     auto& desktop = _sm->AddState<DesktopState>();
-    auto& browser = _sm->AddState<SimpleImageState>(img_BBCNews, MaxActiveMillis);
+    //auto& browser = _sm->AddState<SimpleImageState>(img_BBCNews, MaxActiveMillis);
     auto& bsod = _sm->AddState<BSODState>(img_BSOD, MaxActiveMillis);
     auto& matrix = _sm->AddState<MatrixScreensaverState>();
     auto& pipes = _sm->AddState<PipesScreensaverState>();
     auto& starfield = _sm->AddState<StarfieldScreensaverState>();
+    auto& pong = _sm->AddState<PongState>();
     auto& solitare = _sm->AddState<SolitareState>();
-
     bios.AddTransition(osBoot);
     osBoot.AddTransition(desktop);
-    desktop.AddTransitions(/*browser,*/ matrix, pipes, starfield, solitare, bsod);
+    desktop.AddTransitions(/*browser,*/ matrix, pipes, starfield, pong, solitare, bsod);
     //browser.AddTransitions(desktop);
     bsod.AddTransition(bios);
     matrix.AddTransition(desktop);
     pipes.AddTransition(desktop);
     starfield.AddTransition(desktop);
+    pong.AddTransition(desktop);
     solitare.AddTransition(desktop);
     
     _sm->SetNextState(bios);
-    //_sm->SetNextState(matrix);
+    //_sm->SetNextState(pong);
 }
     
 uint16_t EdwinUsermod::effect() {

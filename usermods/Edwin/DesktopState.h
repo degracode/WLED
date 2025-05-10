@@ -25,7 +25,7 @@ public:
             _loaded = true;
         }
 
-        RandomTransitionIfMillisElapsed(5000);
+        RandomTransitionIfMillisElapsed(10000);
     }
 
 private:

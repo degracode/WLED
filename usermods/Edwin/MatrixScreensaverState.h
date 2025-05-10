@@ -10,8 +10,8 @@ public:
         _drops.clear();
 
         unsigned long time = millis();
-        for (int i = 0; i < 5; ++i) {
-            Drop drop = Drop(time - random16(150), -random8(8));
+        for (int i = 0; i < 8; ++i) {
+            Drop drop = Drop(time - random16(150), i, -random8(15));
             _drops.push_back(drop);
         }
     }
@@ -48,9 +48,9 @@ public:
             }
 
             // If the star is dead or off-screen, rebirth it somewhere else
-            if (drop.x < 0 || drop.x >= 8
-             || drop.y >= 12) {
-                drop = Drop(time);
+            if (drop.x < 0 || drop.x > 7
+             || drop.y >= 8+steps) {
+                drop = Drop(time, drop.x, -random8(15));
             }
         }
 
@@ -59,8 +59,8 @@ public:
 
 private:
     struct Drop {
-        Drop(unsigned long startTimeMillis = millis(), int y = 0)
-            : x(random8(0, 7))
+        Drop(unsigned long startTimeMillis, int x, int y)
+            : x(x)
             , y(y)
             , startTimeMillis(startTimeMillis)
             , tickInterval(random8(100, 150)) {
