@@ -181,6 +181,10 @@
   #include "../usermods/Internal_Temperature_v2/usermod_internal_temperature.h"
 #endif
 
+#ifdef USERMOD_EDWIN
+  #include "../usermods/Edwin/usermod_edwin.h"
+#endif
+
 #if defined(WLED_USE_SD_MMC) || defined(WLED_USE_SD_SPI)
 // This include of SD.h and SD_MMC.h must happen here, else they won't be
 // resolved correctly (when included in mod's header only)
@@ -372,5 +376,9 @@ void registerUsermods()
 
   #ifdef USERMOD_INTERNAL_TEMPERATURE
   usermods.add(new InternalTemperatureUsermod());
+  #endif
+
+  #ifdef USERMOD_EDWIN
+  usermods.add(new EdwinUsermod());
   #endif
 }
